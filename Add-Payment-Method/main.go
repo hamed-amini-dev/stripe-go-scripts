@@ -9,8 +9,8 @@ import (
 )
 
 func main() {
-	stripe.Key = "sk_test_51LfLkJLdKtGMf7ZsI7yvCPZizcWoRxYSqN49SCsqzuQv3UVwu7t4hrvOS4CSakkpZPnKkV3sjICOENjK0MEZWAUT00u7sKul49"
-
+	stripe.Key = "sk_test_sample"
+	sampleCustomerID := "cus_sample"
 	stripeParams := stripe.PaymentMethodParams{
 		Card: &stripe.PaymentMethodCardParams{
 			Number:   stripe.String("4242424242424242"),
@@ -29,7 +29,7 @@ func main() {
 	_, err = paymentmethod.Attach(
 		pm.ID,
 		&stripe.PaymentMethodAttachParams{
-			Customer: stripe.String("cus_O3WsRj7vAEkKyA"),
+			Customer: stripe.String(sampleCustomerID),
 		},
 	)
 	if err != nil {
@@ -46,5 +46,5 @@ func main() {
 	}
 
 	fmt.Println(pm.ID)
-	//pm_1NHWthLdKtGMf7ZsjaYcbRds
+
 }

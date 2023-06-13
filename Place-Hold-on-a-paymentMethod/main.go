@@ -50,9 +50,8 @@ func CreatePaymentIntent(customerID, description string, amount int64) (string, 
 	}
 
 	pi, err := paymentintent.New(&stripe.PaymentIntentParams{
-		Amount:   stripe.Int64(amount),
-		Customer: stripe.String(customerID),
-		// Params:        stripe.Params{Metadata: params.Metadata},
+		Amount:        stripe.Int64(amount),
+		Customer:      stripe.String(customerID),
 		PaymentMethod: stripe.String(pm),
 		Currency:      stripe.String(string(stripe.CurrencyUSD)),
 		Confirm:       stripe.Bool(false),
@@ -157,7 +156,7 @@ func CreatePaymentMethod(customerID string, number, cvc string, expireMonth, exp
 func PaymentIntentWithConfirmRefundFlow(sampleCustomerID string) error {
 
 	//create payment intent
-	pi, err := CreatePaymentIntent(sampleCustomerID, "piiitest6", 300)
+	pi, err := CreatePaymentIntent(sampleCustomerID, "pitest", 300)
 	if err != nil {
 		return err
 	}
@@ -181,7 +180,7 @@ func PaymentIntentWithConfirmRefundFlow(sampleCustomerID string) error {
 func PaymentIntentWithCancellFlow(sampleCustomerID string) error {
 
 	//create payment intent
-	pi, err := CreatePaymentIntent(sampleCustomerID, "piiitest6", 300)
+	pi, err := CreatePaymentIntent(sampleCustomerID, "pitest", 300)
 	if err != nil {
 		return err
 	}
@@ -196,8 +195,8 @@ func PaymentIntentWithCancellFlow(sampleCustomerID string) error {
 	return nil
 }
 func main() {
-	stripe.Key = "sk_test_51LfLkJLdKtGMf7ZsI7yvCPZizcWoRxYSqN49SCsqzuQv3UVwu7t4hrvOS4CSakkpZPnKkV3sjICOENjK0MEZWAUT00u7sKul49"
-	sampleCustomerID := "cus_O3WsRj7vAEkKyA"
+	stripe.Key = "sk_test_sample"
+	sampleCustomerID := "cus_sample"
 
 	err := PaymentIntentWithConfirmRefundFlow(sampleCustomerID)
 	if err != nil {

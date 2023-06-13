@@ -68,9 +68,8 @@ func Create(promotionCode, customerID, price string, trialPeriodDays, qty int64,
 }
 
 func main() {
-	stripe.Key = "sk_test_51LfLkJLdKtGMf7ZsI7yvCPZizcWoRxYSqN49SCsqzuQv3UVwu7t4hrvOS4CSakkpZPnKkV3sjICOENjK0MEZWAUT00u7sKul49"
+	stripe.Key = "sk_test_sample"
 
 	fmt.Println(customerID.ID)
-	//cus_O3WsRj7vAEkKyA
 
 }
