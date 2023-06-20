@@ -1,0 +1,3 @@
+port: 8080
+stripe:
+  key: sample stripe key
