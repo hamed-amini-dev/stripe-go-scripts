@@ -14,6 +14,6 @@ type IStripe interface {
 	// PaymentIntentWithConfirmRefundFlow
 	PaymentIntentWithConfirmRefundFlow(r *request.GenericRequest) (interface{}, error)
 
-	// PaymentIntentWithCancellFlow
-	PaymentIntentWithCancellFlow(r *request.GenericRequest) (interface{}, error)
+	// PaymentIntentWithCancelFlow
+	PaymentIntentWithCancelFlow(r *request.GenericRequest) (interface{}, error)
 }
