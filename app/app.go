@@ -71,7 +71,7 @@ func (a *app) server() *http.Server {
 		Handler: a.router,
 	}
 
-	log.Println("System is ready to transfer")
+	log.Println("System is ready to work with sample stripe scripts")
 	log.Println("listen on port:", server.Addr)
 
 	return server

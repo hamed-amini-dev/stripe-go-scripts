@@ -46,7 +46,7 @@ func StripeRoutes(th stripe.IStripe) []Route {
 			Name:    "payment intent with cancell flow",
 			Method:  http.MethodPost,
 			Path:    "/pi_with_cancel_flow",
-			Handler: lhttp.DefaultHTTPHandler(th.PaymentIntentWithCancellFlow),
+			Handler: lhttp.DefaultHTTPHandler(th.PaymentIntentWithCancelFlow),
 		},
 	}
 }

@@ -66,7 +66,7 @@ func (is iStripe) PaymentIntentWithConfirmRefundFlow(r *request.GenericRequest) 
 	return nil, is.service.PaymentIntentWithConfirmRefundFlow(&params)
 }
 
-func (is iStripe) PaymentIntentWithCancellFlow(r *request.GenericRequest) (interface{}, error) {
+func (is iStripe) PaymentIntentWithCancelFlow(r *request.GenericRequest) (interface{}, error) {
 	var params sStripe.PaymentIntentWithCancellFlowParams
 	err := json.Unmarshal(r.Body, &params)
 	if err != nil {
