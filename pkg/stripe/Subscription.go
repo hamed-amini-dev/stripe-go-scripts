@@ -1,15 +1,13 @@
-package main
+package stripe
 
 import (
-	"fmt"
-
 	"github.com/stripe/stripe-go/v74"
 	"github.com/stripe/stripe-go/v74/invoice"
 	"github.com/stripe/stripe-go/v74/subscription"
 )
 
 // https://github.com/stripe-samples/placing-a-hold/blob/main/without-webhooks/server/php/index.php
-func Create(promotionCode, customerID, price string, trialPeriodDays, qty int64, payout bool) *stripe.Subscription {
+func CreateSubscription(promotionCode, customerID, price string, trialPeriodDays, qty int64, payout bool) (*stripe.Subscription, error) {
 	var PromotionCode *string
 	if promotionCode == "" {
 		PromotionCode = nil
@@ -17,21 +15,11 @@ func Create(promotionCode, customerID, price string, trialPeriodDays, qty int64,
 		PromotionCode = stripe.String(promotionCode)
 	}
 
-	/* plan, err := s.plan.Get(params.PlanID)
-	if err != nil {
-		return nil, err
-	} */
-
-	/* if params.Qty <= 0 {
-		params.Qty = 1
-	} */
-
 	sParams := &stripe.SubscriptionParams{
 		Customer:        &customerID,
 		TrialPeriodDays: stripe.Int64(trialPeriodDays),
 		Items: []*stripe.SubscriptionItemsParams{
 			{
-				// Price:    stripe.String(plan.GetRecurringPriceID()),
 				Price:    &price,
 				Quantity: stripe.Int64(qty),
 			},
@@ -40,13 +28,10 @@ func Create(promotionCode, customerID, price string, trialPeriodDays, qty int64,
 		DaysUntilDue:     stripe.Int64(0),
 		PromotionCode:    PromotionCode,
 	}
-	// sParams.AddMetadata("plan_id", plan.ID)
-	/* if params.DefaultPaymentMethodID != "" {
-		cParams.DefaultPaymentMethod = stripe.String(params.DefaultPaymentMethodID)
-	} */
+
 	stripeSubscription, err := subscription.New(sParams)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
 	if payout {
@@ -56,20 +41,15 @@ func Create(promotionCode, customerID, price string, trialPeriodDays, qty int64,
 		})
 
 		if err != nil {
-			panic(err)
+			return nil, err
 		}
 
 		stripeSubscription, err = subscription.Get(stripeSubscription.ID, nil)
 		if err != nil {
-			panic(err)
+			return nil, err
 		}
 	}
 
-}
-
-func main() {
-	stripe.Key = "sk_test_sample"
-
-	fmt.Println(customerID.ID)
+	return stripeSubscription, nil
 
 }

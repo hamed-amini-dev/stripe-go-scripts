@@ -1,25 +1,21 @@
-package main
+package stripe
 
 import (
-	"fmt"
-
 	"github.com/stripe/stripe-go/v74"
 	"github.com/stripe/stripe-go/v74/customer"
 )
 
-func main() {
-	stripe.Key = "sk_test_sample"
-
+func CreateCustomer(name, email string) (string, error) {
 	stripeParams := &stripe.CustomerParams{
-		Name:  stripe.String("sample"),
-		Email: stripe.String("sample@gmail.com"),
+		Name:  stripe.String(name),
+		Email: stripe.String(email),
 	}
 
 	customerID, err := customer.New(stripeParams)
 	if err != nil {
-		panic(err)
+		return "", err
 	}
 
-	fmt.Println(customerID.ID)
+	return customerID.ID, nil
 
 }

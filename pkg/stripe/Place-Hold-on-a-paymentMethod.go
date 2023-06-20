@@ -1,4 +1,4 @@
-package main
+package stripe
 
 import (
 	"errors"
@@ -153,22 +153,22 @@ func CreatePaymentMethod(customerID string, number, cvc string, expireMonth, exp
 	return pm.ID, nil
 }
 
-func PaymentIntentWithConfirmRefundFlow(sampleCustomerID string) error {
+func PaymentIntentWithConfirmRefundFlow(customerID, description string, amount int64) error {
 
 	//create payment intent
-	pi, err := CreatePaymentIntent(sampleCustomerID, "pitest", 300)
+	pi, err := CreatePaymentIntent(customerID, description, amount)
 	if err != nil {
 		return err
 	}
 
 	//confirm for release
-	err = ConfirmPaymentIntent(pi, sampleCustomerID)
+	err = ConfirmPaymentIntent(pi, customerID)
 	if err != nil {
 		return err
 	}
 
 	//capture payment intent
-	err = CapturePaymentIntent(pi, 300)
+	err = CapturePaymentIntent(pi, amount)
 	if err != nil {
 		return err
 	}
@@ -177,26 +177,28 @@ func PaymentIntentWithConfirmRefundFlow(sampleCustomerID string) error {
 
 }
 
-func PaymentIntentWithCancellFlow(sampleCustomerID string) error {
+func PaymentIntentWithCancellFlow(customerID, description string, amount int64) error {
 
 	//create payment intent
-	pi, err := CreatePaymentIntent(sampleCustomerID, "pitest", 300)
+	pi, err := CreatePaymentIntent(customerID, description, amount)
 	if err != nil {
 		return err
 	}
 
 	//cancel payment
-	reasone := string(stripe.PaymentIntentCancellationReasonRequestedByCustomer)
-	err = CancelPaymentIntent(pi, reasone)
+	reason := string(stripe.PaymentIntentCancellationReasonRequestedByCustomer)
+	err = CancelPaymentIntent(pi, reason)
 	if err != nil {
 		return err
 	}
 
 	return nil
 }
+
+/*
 func main() {
-	stripe.Key = "sk_test_sample"
-	sampleCustomerID := "cus_sample"
+	stripe.Key = "sk_test_51LfLkJLdKtGMf7ZsI7yvCPZizcWoRxYSqN49SCsqzuQv3UVwu7t4hrvOS4CSakkpZPnKkV3sjICOENjK0MEZWAUT00u7sKul49"
+	sampleCustomerID := "cus_O3WsRj7vAEkKyA"
 
 	err := PaymentIntentWithConfirmRefundFlow(sampleCustomerID)
 	if err != nil {
@@ -209,3 +211,4 @@ func main() {
 	}
 
 }
+*/
